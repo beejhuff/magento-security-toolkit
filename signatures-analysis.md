@@ -5,70 +5,73 @@
 
 **External Symptoms (Modified Files & Attack Signatures) exhibited by Magento after partial or complete compromise**
 
->It is important to remember that the files you see in your own environment may NOT be altered in the exact same manner as we describe below.  Most attacks are automated and in many cases the attackers will write programs that slightly modify themselves over time as they attack more and more targets successfully so that they can more easily escape detection after they have been in the wild for some time.  You may also find exact duplicates of the behavior and files we highlight below.  If you are not well versed in troubleshooting and analyzing these kinds of situations, you should contact a trained security professional before proceeding and ask for assistance to minimize your risk of further damage and give yourself time to address the situation deliberately and thoroughly.
+>It is important to remember that the files you see in your own environment may NOT be altered in the exact same >manner as we describe below.  Most attacks are automated and in many cases the attackers will write programs that >slightly modify themselves over time as they attack more and more targets successfully so that they can more easily >escape detection after they have been in the wild for some time.  You may also find exact duplicates of the >behavior and files we highlight below.  If you are not well versed in troubleshooting and analyzing these kinds of >situations, you should contact a trained security professional before proceeding and ask for assistance to minimize >your risk of further damage and give yourself time to address the situation deliberately and thoroughly.
 
 
-* **Signature:** Your privileged users can’t Login into the Magento Admin Panel:
+* **Signature:** Privileged users can’t Login into the Magento Admin Panel
 
-  * Reference:[http://magento.stackexchange.com/questions/64461/error-logging-in-the-admin-panel-fatal-error-class-magpleasure-filesystem-help](http://magento.stackexchange.com/questions/64461/error-logging-in-the-admin-panel-fatal-error-class-magpleasure-filesystem-help)
+ * Reference:[http://magento.stackexchange.com/questions/64461/error-logging-in-the-admin-panel-fatal-error-class-magpleasure-filesystem-help](http://magento.stackexchange.com/questions/64461/error-logging-in-the-admin-panel-fatal-error-class-magpleasure-filesystem-help)
 
-  * This issue of having a blank screen prevent Admins from attempting to login to the Magento Backend was most frequently due to the attacker disabling all module output in Core Config table which prevented legitimate admin users from seeing errors that were being generated from the files the attackers modified. 
+ * This issue of having a blank screen prevent Admins from attempting to login to the Magento Backend was most frequently due to the attacker disabling all module output in Core Config table which prevented legitimate admin users from seeing errors that were being generated from the files the attackers modified. 
 
-  * If you were able login to the Magento Admin, this probably hasn’t happened to your system yet.  On the most significantly affected site we examined, it appeared that the attackers didn't decide to trigger this attack until after they had control of the system for several hours.  If you can not login because you don’t see the form fields (just a white screen), then login to your database server via phpMyAdmin or a MySQL client and run the following query to confirm the presence of the signature ad to re-enable the Admin HTML Module Output.
+ * If you were able login to the Magento Admin, this probably hasn’t happened to your system yet.  On the most significantly affected site we examined, it appeared that the attackers didn't decide to trigger this attack until after they had control of the system for several hours.  If you can not login because you don’t see the form fields (just a white screen), then login to your database server via phpMyAdmin or a MySQL client and run the following query to confirm the presence of the signature ad to re-enable the Admin HTML Module Output.
 
 
 ```
-/*
-If a similar signature is present you might see a 1 in the value column of the results set that is returned from the following SQL Query 
-*/
+# If a similar signature is present you might see a '1' in the value column of the result set
+# that is returned from the following SQL Query
 
-SELECT * FROM db_amedadirect_ins.core_config_data
-    WHERE path = 'advanced/modules_disable_output/Mage_Admin';
+    SELECT * FROM db_amedadirect_ins.core_config_data
+      WHERE path = 'advanced/modules_disable_output/Mage_Admin';
 
-/*
-The following query will reset this back to the default of '0' and then you can log back into the Magento Admin after you reset your cache and modify any modules that should be disabled back to their proper state.
-*/
+# The following query will reset this back to the default of '0' and then you can log back 
+# into the Magento Admin after you reset your cache and modify any modules that should be 
+# disabled back to their proper state.
 
-UPDATE db_amedadirect_ins.core_config_data
-    SET value = 0
-    WHERE path = 'advanced/modules_disable_output/Mage_Admin';
+    UPDATE db_amedadirect_ins.core_config_data
+      SET value = 0
+      WHERE path = 'advanced/modules_disable_output/Mage_Admin';
 
 ```
 
-[Reference with other users seeing similar behavior of Magento Admin and problems logging in....](http://magento.stackexchange.com/questions/64461/error-logging-in-the-admin-panel-fatal-error-class-magpleasure-filesystem-help)</div>
+   * Reports identified other users seeing [similar behavior in Magento Admin and problems logging in....](http://magento.stackexchange.com/questions/64461/error-logging-in-the-admin-panel-fatal-error-class-magpleasure-filesystem-help)
 
-* **Multiple Modified Files in your source code directories that provide several “back doors" into the system and ways to steal Customer, Merchant, and Credit Card Data.  General references below, specific examples of identified signatures follow in subset section.** 
+* **Multiple Modified Files** in your application folders that create back doors into the system and provide mechanism to steal Customer, Merchant, and Credit Card Data during transit.  General references below, specific examples of identified signatures follow in subset section.
 
- *   [http://magento.stackexchange.com/questions/67660/magento-hacked-even-after-applied-patch](http://magento.stackexchange.com/questions/67660/magento-hacked-even-after-applied-patch)
- *   [http://invisiblezero.net/magento-secure-your-webshop/](http://invisiblezero.net/magento-secure-your-webshop/)
- *   [https://blog.sucuri.net/2015/04/magento-shoplift-supee-5344-exploits-in-the-wild.html](https://blog.sucuri.net/2015/04/magento-shoplift-supee-5344-exploits-in-the-wild.html)
- *   [http://devdocs.magento.com/guides/m1x/install/installer-privileges_after.html#extensions](http://devdocs.magento.com/guides/m1x/install/installer-privileges_after.html#extensions)
- *   [https://blog.sucuri.net/2015/04/magento-shoplift-supee-5344-exploits-in-the-wild.html](https://blog.sucuri.net/2015/04/magento-shoplift-supee-5344-exploits-in-the-wild.html)
+  * [http://magento.stackexchange.com/questions/67660/magento-hacked-even-after-applied-patch](http://magento.stackexchange.com/questions/67660/magento-hacked-even-after-applied-patch)
+  * [http://invisiblezero.net/magento-secure-your-webshop/](http://invisiblezero.net/magento-secure-your-webshop/)
+  * [https://blog.sucuri.net/2015/04/magento-shoplift-supee-5344-exploits-in-the-wild.html](https://blog.sucuri.net/2015/04/magento-shoplift-supee-5344-exploits-in-the-wild.html)
+  * [http://devdocs.magento.com/guides/m1x/install/installer-privileges_after.html#extensions](http://devdocs.magento.com/guides/m1x/install/installer-privileges_after.html#extensions)
+  * [https://blog.sucuri.net/2015/04/magento-shoplift-supee-5344-exploits-in-the-wild.html](https://blog.sucuri.net/2015/04/magento-shoplift-supee-5344-exploits-in-the-wild.html)
 
-*   **Stolen CC Specific modified file allows attacker to intercept communications with the gateway merchant transaction process and send CC info to their own servers:** 
-	* https://blog.sucuri.net/2015/04/impacts-of-a-hack-on-a-magento-ecommerce-website.html
-    * http://magento.stackexchange.com/questions/67660/magento-hacked-even-after-applied-patch
+* ** Modified payment gateway transaction files allows attacker to intercept communications with the gateway merchant transaction process and send CC info to their own servers:** 
+  * https://blog.sucuri.net/2015/04/impacts-of-a-hack-on-a-magento-ecommerce-website.html
+  * http://magento.stackexchange.com/questions/67660/magento-hacked-even-after-applied-patch
  
 
-*  **Discover Magpleasure_Filesystem in app/code/Magpleaseure/Filesystem & app/etc/modules**
-  *  **FILES:** app/code/Magpleaseure/Filesystem & httpdocs/app/etc/modules/Magpleasure_Filesystem.xml
-  *  https://www.reddit.com/r/hacking/comments/34025m/magento_exploit_downlaoding_magpleasurefilesystem/
+* **Discover Magpleasure_Filesystem in app/code/Magpleaseure/Filesystem & app/etc/modules**
+  * **File:** app/code/Magpleaseure/Filesystem & httpdocs/app/etc/modules/Magpleasure_Filesystem.xml
+
+  * **Reference:** [https://www.reddit.com/r/hacking/comments/34025m/magento_exploit_downlaoding_magpleasurefilesystem/](https://www.reddit.com/r/hacking/comments/34025m/magento_exploit_downlaoding_magpleasurefilesystem/)
+
+  * The following command will travers a Linux / Unix file system and print any matching files to the standard output. You may need to modify the beginning directory for your OS & webserver combination.
             
       ```$ find /var/www/ -type d -iname "Magpleasure”```
 
-  * You may also discover that there is a new file at app/etc/modules/Magplesaure_Fileserver.xml (or something named similarly)  that enables the module files you find above in your environment.  If you are unsure, check the file dates on the two files.  In all of our previous examples we found the time/date stamps were on the same day within  a few minutes of each other.
+  * **File:** app/etc/modules/Magplesaure_Fileserver.xml (
+  * Enables the filesystem module from Magpleasure previously demonstrated to be compromised.
 
 
-* **A modified Version of the base Varien Object Class** is added the source code folder for your site.
+* **A modified Version of the base Varien Object Class** replaces the original application source file.
   * **FILE:** httpdocs/lib/Varien/Object.php
 
-  * When you first have a visitor hit your site AT a specific URI '/checkout|admin/‘ (which the attackers do 5 times in a row to trigger this hacked file to be executed vi the conditional statements added to the top of the file, this file 
+  * When you first have a visitor hit your site AT a specific URI '/checkout|admin/‘ (which the attackers do 5 times in a row to trigger this hacked file to be executed vi the conditional statements added to the top of the file, this file.
 
-  * This was normally one of the first (if not the first) execution of  compromised file on the attacked we b server we would uncover.  It’s primary functions are twofold:
+  * This was commonly one of the first evidence of a compromised file on the attacked web server discovered.  It’s primary functions appeared to be twofold:
 
-  * First, to create additional files on the server that are stored in the media/cache subdirectories.  These files allow additional exploits of the file system in case this exploit is discovered and removed.
+  * First, copy or create additional files stored in the var/media & var/cache subdirectories.  Provided additional opportunities to exploit weak file and folder permissions or unpatched or dated plugins that could be used to provide additional attack vectors if the original entry points were discovered and removed or disabled.
 
-  * Second, to Query the database for customer contact records and write the results of the queries to another set of files that are stored in the media/cache directories.  These files are serialized and concatenated into Base 64 encoded streams and then written to a COOKIE variable that is passed back in the HTTP response to either a console application or a listening agent that records the stream of customer data.  This will become important later in order to get the full value from the credit card merchant credentials that are stole since you can use this info to get other cards issued to the user based on the dimorphic data stolen.
+  * Second, to query the database for customer contact records and write the results of the queries to another set of files that are stored in the var/media var/cache directories.  These files were serialized and concatenated into Base 64 encoded streams and then written to a COOKIE variable that was passed back in an HTTP response for transmission to another host, presumably one controlled by the attacker.
 
 * **You find that there has been an Installation of a Modified Version or changes the current file itself, but then deletes the code from itself that performs the modification)**
 
