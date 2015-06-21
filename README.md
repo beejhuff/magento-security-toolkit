@@ -5,7 +5,9 @@
 ***IMPORTANT NOTE*** Our current research on known attack signatures related to SUPEE-5344 and SUPEE-5994 is [briefly covered in the Markdown summary](/comitdevelopers/magento-security-toolkit/blob/master/signatures-analysis.md) - please add whatever else you've discovered yourself and submit a pull request, we're ready to merge!  If you'd prefer to submit anything directly or anonymously, you can also use one of the methods below
 
 * Email : signatures@comitdevelopers.com
-* Discussion Group : magento-security-toolkit@comitdevelopers.com (https://groups.google.com/a/comitdevelopers.com/d/forum/magento-security-toolkit)
+
+* Discussion Group : (via email) magento-security-toolkit@comitdevelopers.com (via Google Groups) https://groups.google.com/a/comitdevelopers.com/d/forum/magento-security-toolkit
+
 * Gitter Chat Room : https://gitter.im/comitdevelopers/magento-security-toolkit
 
 ----------
