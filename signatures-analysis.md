@@ -7,13 +7,15 @@
 
 >It is important to remember that the files you see in your own environment may NOT be altered in the exact same manner as we describe below.  Most attacks are automated and in many cases the attackers will write programs that slightly modify themselves over time as they attack more and more targets successfully so that they can more easily escape detection after they have been in the wild for some time.  You may also find exact duplicates of the behavior and files we highlight below.  If you are not well versed in troubleshooting and analyzing these kinds of situations, you should contact a trained security professional before proceeding and ask for assistance to minimize your risk of further damage and give yourself time to address the situation deliberately and thoroughly.
 
-* **Your privileged users can’t Login into the Magento Admin Panel:**
 
-  *   Reference: [http://magento.stackexchange.com/questions/64461/error-logging-in-the-admin-panel-fatal-error-class-magpleasure-filesystem-help](http://magento.stackexchange.com/questions/64461/error-logging-in-the-admin-panel-fatal-error-class-magpleasure-filesystem-help)
+* **Signature:** Your privileged users can’t Login into the Magento Admin Panel:
 
-    *   This issue of having a blank screen prevent Admins from attempting to login to the Magento Backend was most frequently due to the attacker disabling all module output in Core Config table which prevented legitimate admin users from seeing errors that were being generated from the files the attackers modified. 
+  * Reference:[http://magento.stackexchange.com/questions/64461/error-logging-in-the-admin-panel-fatal-error-class-magpleasure-filesystem-help](http://magento.stackexchange.com/questions/64461/error-logging-in-the-admin-panel-fatal-error-class-magpleasure-filesystem-help)
 
-    *   If you were able login to the Magento Admin, this probably hasn’t happened to your system yet.  On the most significantly affected site we examined, it appeared that the attackers didn't decide to trigger this attack until after they had control of the system for several hours.  If you can not login because you don’t see the form fields (just a white screen), then login to your database server via phpMyAdmin or a MySQL client and run the following query to confirm the presence of the signature ad to re-enable the Admin HTML Module Output.
+  * This issue of having a blank screen prevent Admins from attempting to login to the Magento Backend was most frequently due to the attacker disabling all module output in Core Config table which prevented legitimate admin users from seeing errors that were being generated from the files the attackers modified. 
+
+  * If you were able login to the Magento Admin, this probably hasn’t happened to your system yet.  On the most significantly affected site we examined, it appeared that the attackers didn't decide to trigger this attack until after they had control of the system for several hours.  If you can not login because you don’t see the form fields (just a white screen), then login to your database server via phpMyAdmin or a MySQL client and run the following query to confirm the presence of the signature ad to re-enable the Admin HTML Module Output.
+
 
 ```
 /*
