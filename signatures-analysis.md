@@ -3,30 +3,30 @@
    * SUPEE-5344
    * SUPEE-5994
 
-**External Symptoms (Modified Files & Attack Signatures) exhibited by Magento after partial or complete compromise**
+**NOTE:** The files you may discover in your own or other environments may NOT be altered in the exact same
+manner as described below.  Given the level of automation used in the attacks witnessed to date, it is possible that you may discover remarkably similar behaviors in your own analysis, but keep in mind that the algorithms and attack strategies described below could be altered slightly to produce similar outcomes using different coding techniques. You should consult with a experienced Security Professional to assist with forensic analysis and discovery before attempting to restore any compromised to your network.
 
->It is important to remember that the files you see in your own environment may NOT be altered in the exact same >manner as we describe below.  Most attacks are automated and in many cases the attackers will write programs that >slightly modify themselves over time as they attack more and more targets successfully so that they can more easily >escape detection after they have been in the wild for some time.  You may also find exact duplicates of the >behavior and files we highlight below.  If you are not well versed in troubleshooting and analyzing these kinds of >situations, you should contact a trained security professional before proceeding and ask for assistance to minimize >your risk of further damage and give yourself time to address the situation deliberately and thoroughly.
 
+* **Signature 1:** Privileged users can’t Login into the Magento Admin Panel
 
-* **Signature:** Privileged users can’t Login into the Magento Admin Panel
+  * **Reference:** [http://magento.stackexchange.com/questions/64461/error-logging-in-the-admin-panel-fatal-error-class-magpleasure-filesystem-help](http://magento.stackexchange.com/questions/64461/error-logging-in-the-admin-panel-fatal-error-class-magpleasure-filesystem-help)
 
- * Reference:[http://magento.stackexchange.com/questions/64461/error-logging-in-the-admin-panel-fatal-error-class-magpleasure-filesystem-help](http://magento.stackexchange.com/questions/64461/error-logging-in-the-admin-panel-fatal-error-class-magpleasure-filesystem-help)
+  * This reported issue of having a blank screen prevent Admins from attempting to login to the Magento Backend was most frequently due to the attacker disabling all module output in Core Config table which prevented legitimate admin users from seeing errors that were being generated from the files the attackers modified. 
 
- * This issue of having a blank screen prevent Admins from attempting to login to the Magento Backend was most frequently due to the attacker disabling all module output in Core Config table which prevented legitimate admin users from seeing errors that were being generated from the files the attackers modified. 
+  * **Reference:** In other reports users identified seeing [similar behavior in Magento Admin and problems logging in....](http://magento.stackexchange.com/questions/64461/error-logging-in-the-admin-panel-fatal-error-class-magpleasure-filesystem-help)
 
- * If you were able login to the Magento Admin, this probably hasn’t happened to your system yet.  On the most significantly affected site we examined, it appeared that the attackers didn't decide to trigger this attack until after they had control of the system for several hours.  If you can not login because you don’t see the form fields (just a white screen), then login to your database server via phpMyAdmin or a MySQL client and run the following query to confirm the presence of the signature ad to re-enable the Admin HTML Module Output.
-
+  * On the most significantly compromised system examined, it appeared the attackers didn't trigger the payload for this attack until after having control of the system for several hours.  If you see something similar=, login to your database server a native or web client and run the following query to confirm the presence of the attack signature ad re-enable the Admin HTML Module Output.
 
 ```
 # If a similar signature is present you might see a '1' in the value column of the result set
-# that is returned from the following SQL Query
+# that is returned from the following SQL Query.  This indicates output for that module is disabled.
 
     SELECT * FROM db_amedadirect_ins.core_config_data
       WHERE path = 'advanced/modules_disable_output/Mage_Admin';
 
-# The following query will reset this back to the default of '0' and then you can log back 
-# into the Magento Admin after you reset your cache and modify any modules that should be 
-# disabled back to their proper state.
+# The following query will reset this to the default of '0' which should restore your ability to 
+# login to the Magento Backend after you reset your Magento cache NOTE: you should modify any 
+# modules that you left in disabled state before as the below will restore all module output.
 
     UPDATE db_amedadirect_ins.core_config_data
       SET value = 0
@@ -34,20 +34,18 @@
 
 ```
 
-   * Reports identified other users seeing [similar behavior in Magento Admin and problems logging in....](http://magento.stackexchange.com/questions/64461/error-logging-in-the-admin-panel-fatal-error-class-magpleasure-filesystem-help)
-
-* **Multiple Modified Files** in your application folders that create back doors into the system and provide mechanism to steal Customer, Merchant, and Credit Card Data during transit.  General references below, specific examples of identified signatures follow in subset section.
-
-  * [http://magento.stackexchange.com/questions/67660/magento-hacked-even-after-applied-patch](http://magento.stackexchange.com/questions/67660/magento-hacked-even-after-applied-patch)
-  * [http://invisiblezero.net/magento-secure-your-webshop/](http://invisiblezero.net/magento-secure-your-webshop/)
-  * [https://blog.sucuri.net/2015/04/magento-shoplift-supee-5344-exploits-in-the-wild.html](https://blog.sucuri.net/2015/04/magento-shoplift-supee-5344-exploits-in-the-wild.html)
-  * [http://devdocs.magento.com/guides/m1x/install/installer-privileges_after.html#extensions](http://devdocs.magento.com/guides/m1x/install/installer-privileges_after.html#extensions)
-  * [https://blog.sucuri.net/2015/04/magento-shoplift-supee-5344-exploits-in-the-wild.html](https://blog.sucuri.net/2015/04/magento-shoplift-supee-5344-exploits-in-the-wild.html)
-
-* ** Modified payment gateway transaction files allows attacker to intercept communications with the gateway merchant transaction process and send CC info to their own servers:** 
+* **Signature 2:** Modified or replaced transacation gateway files allows attacker to intercept communications with the gateway merchant transaction process and send CC info to their own servers:** 
   * https://blog.sucuri.net/2015/04/impacts-of-a-hack-on-a-magento-ecommerce-website.html
   * http://magento.stackexchange.com/questions/67660/magento-hacked-even-after-applied-patch
  
+  * **NOTE:** Users across several online forums reported multiple files modified or replaced to gain additonal access to improperly secured applications folders that created entry points into the system and provided mechanisms to steal Customer and Merchant data from the database and Credit Card Data during transit.  During our analysis we discovered the files specified above, though not all of the ones docuemented in the General references lnked below:
+
+    * [http://magento.stackexchange.com/questions/67660/magento-hacked-even-after-applied-patch](http://magento.stackexchange.com/questions/67660/magento-hacked-even-after-applied-patch)
+    * [http://invisiblezero.net/magento-secure-your-webshop/](http://invisiblezero.net/magento-secure-your-webshop/)
+    * [https://blog.sucuri.net/2015/04/magento-shoplift-supee-5344-exploits-in-the-wild.html](https://blog.sucuri.net/2015/04/magento-shoplift-supee-5344-exploits-in-the-wild.html)
+    * [http://devdocs.magento.com/guides/m1x/install/installer-privileges_after.html#extensions](http://devdocs.magento.com/guides/m1x/install/installer-privileges_after.html#extensions)
+    * [https://blog.sucuri.net/2015/04/magento-shoplift-supee-5344-exploits-in-the-wild.html](https://blog.sucuri.net/2015/04/magento-shoplift-supee-5344-exploits-in-the-wild.html)
+
 
 * **Discover Magpleasure_Filesystem in app/code/Magpleaseure/Filesystem & app/etc/modules**
   * **File:** app/code/Magpleaseure/Filesystem & httpdocs/app/etc/modules/Magpleasure_Filesystem.xml
