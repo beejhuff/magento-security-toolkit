@@ -6,7 +6,11 @@
 
 * Email : signatures@comitdevelopers.com
 
-* Discussion Group : (via email) magento-security-toolkit@comitdevelopers.com (via Google Groups) https://groups.google.com/a/comitdevelopers.com/d/forum/magento-security-toolkit
+* Discussion Group : 
+
+    * (via email list) magento-security-toolkit@comitdevelopers.com 
+
+    * (via Google Groups) https://groups.google.com/a/comitdevelopers.com/d/forum/magento-security-toolkit
 
 * Gitter Chat Room : https://gitter.im/comitdevelopers/magento-security-toolkit
 
