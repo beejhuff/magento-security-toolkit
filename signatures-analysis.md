@@ -8,14 +8,14 @@ manner as described below.  Given the level of automation used in the attacks wi
 
 
 * **Signature 1:** Privileged users can’t Login into the Magento Admin Panel
-
+  * **File:** n/a - no file that performed required SQL updates could be located during analysis.  Attackers appeared to have taken advantage of folder permissions that were not set as per best practices due to a prevoius automated software update that did not compelete properly and left user and group permissions on folders it was updating in an inconsistent state. 
+  
   * **Reference:** [http://magento.stackexchange.com/questions/64461/error-logging-in-the-admin-panel-fatal-error-class-magpleasure-filesystem-help](http://magento.stackexchange.com/questions/64461/error-logging-in-the-admin-panel-fatal-error-class-magpleasure-filesystem-help)
 
   * This reported issue of having a blank screen prevent Admins from attempting to login to the Magento Backend was most frequently due to the attacker disabling all module output in Core Config table which prevented legitimate admin users from seeing errors that were being generated from the files the attackers modified. 
 
   * **Reference:** In other reports users identified seeing [similar behavior in Magento Admin and problems logging in....](http://magento.stackexchange.com/questions/64461/error-logging-in-the-admin-panel-fatal-error-class-magpleasure-filesystem-help)
 
-  * On the most significantly compromised system examined, it appeared the attackers didn't trigger the payload for this attack until after having control of the system for several hours.  If you see something similar=, login to your database server a native or web client and run the following query to confirm the presence of the attack signature ad re-enable the Admin HTML Module Output.
 
 ```
 # If a similar signature is present you might see a '1' in the value column of the result set
@@ -35,8 +35,27 @@ manner as described below.  Given the level of automation used in the attacks wi
 ```
 
 * **Signature 2:** Modified or replaced transacation gateway files allows attacker to intercept communications with the gateway merchant transaction process and send CC info to their own servers:** 
-  * https://blog.sucuri.net/2015/04/impacts-of-a-hack-on-a-magento-ecommerce-website.html
-  * http://magento.stackexchange.com/questions/67660/magento-hacked-even-after-applied-patch
+
+  * **File:** <mage_root>/app/code/core/Mage/Payment/Model/Method/Cc.php
+  
+  * **Reference:** Denis Sinegubko ([@unmaskparasites](https://twitter.com/@unmaskparasites))of [Sucuri Labs Blog]( https://blog.sucuri.net/2015/04/impacts-of-a-hack-on-a-magento-ecommerce-website.html)
+
+  * **Symptom:** Attackers modified credit card model to forward all customer submitted information to another host for capture prior to sending to gateway and merchant acocunt for processing transaction.
+  
+
+* **Signature 3:** Modified or Replaced Magento Application Runtime initializer to obcsure activities and acquire Credit Card Gateway Provider login account and associated key.
+
+  * **File:** <mage_root>index.php
+
+  * **Reference:** Stack Exchange Forum Discussion http://magento.stackexchange.com/questions/67660/magento-hacked-even-after-applied-patch
+
+  
+* **Signature 4:** Modified or replaced proxy script originally designed to compress, concatenate and minify JavaScript and CSS assets so it would include create an additional server response that included data compromised in an earlier attack.
+
+  * **File:** <mage_root>/js/index.php
+
+  * **Reference:** Stack Exchange Forum Discussion http://magento.stackexchange.com/questions/67660/magento-hacked-even-after-applied-
+
  
   * **NOTE:** Users across several online forums reported multiple files modified or replaced to gain additonal access to improperly secured applications folders that created entry points into the system and provided mechanisms to steal Customer and Merchant data from the database and Credit Card Data during transit.  During our analysis we discovered the files specified above, though not all of the ones docuemented in the General references lnked below:
 
