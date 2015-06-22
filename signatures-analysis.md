@@ -4,7 +4,7 @@
    * SUPEE-5994
 
 **NOTE:** The files you may discover in your own or other environments may NOT be altered in the exact same
-manner as described below.  Given the level of automation used in the attacks witnessed to date, it is possible that you may discover remarkably similar behaviors in your own analysis, but keep in mind that the algorithms and attack strategies described below could be altered slightly to produce similar outcomes using different coding techniques. You should consult with a experienced Security Professional to assist with forensic analysis and discovery before attempting to restore any compromised to your network.
+manner as described below.  Given the level of automation used in the attacks witnessed to date, it is possible that you may discover remarkably similar behaviors in your own analysis, but keep in mind that the algorithms and attack strategies described below could be altered slightly to produce similar outcomes using different coding techniques. You should consult with a experienced Security Professional to assist with forensic analysis and discovery before attempting to restore any compromised to your network.  
 
 
 * **Signature 1:** Privileged users can’t Login into the Magento Admin Panel
@@ -32,38 +32,52 @@ manner as described below.  Given the level of automation used in the attacks wi
       SET value = 0
       WHERE path = 'advanced/modules_disable_output/Mage_Admin';
 
-```
+```  
+  
 
-* **Signature 2:** Modified or replaced transacation gateway files allows attacker to intercept communications with the gateway merchant transaction process and send CC info to their own servers:** 
+* **Signature 2:** Altered transacation gateway files allows attacker to intercept communications with the gateway merchant transaction process and send CC info to their own servers:** 
 
   * **File:** <mage_root>/app/code/core/Mage/Payment/Model/Method/Cc.php
   
   * **Reference:** Denis Sinegubko ([@unmaskparasites](https://twitter.com/@unmaskparasites))of [Sucuri Labs Blog]( https://blog.sucuri.net/2015/04/impacts-of-a-hack-on-a-magento-ecommerce-website.html)
 
-  * **Symptom:** Attackers modified credit card model to forward all customer submitted information to another host for capture prior to sending to gateway and merchant acocunt for processing transaction.
+  * **Symptom:** Attackers modified credit card model to forward all customer submitted information to another host for capture prior to sending to gateway and merchant acocunt for processing transaction.  
   
-
-* **Signature 3:** Modified or Replaced Magento Application Runtime initializer to obcsure activities and acquire Credit Card Gateway Provider login account and associated key.
+  
+* **Signature 3:** Altered Magento Application Runtime initializer to obcsure activities and acquire Credit Card Gateway Provider login account and associated key.  All Magento log directives and error output were specifically disabled using directives in this file moved to new locations in thes script before the fucntions that catpured gateway login and key details.
 
   * **File:** <mage_root>index.php
 
-  * **Reference:** Stack Exchange Forum Discussion http://magento.stackexchange.com/questions/67660/magento-hacked-even-after-applied-patch
-
+  * **Reference:** [Stack Exchange Forum Discussion](http://magento.stackexchange.com/questions/67660/magento-hacked-even-after-applied-patch)  
   
+    
 * **Signature 4:** Modified or replaced proxy script originally designed to compress, concatenate and minify JavaScript and CSS assets so it would include create an additional server response that included data compromised in an earlier attack.
 
   * **File:** <mage_root>/js/index.php
 
-  * **Reference:** Stack Exchange Forum Discussion http://magento.stackexchange.com/questions/67660/magento-hacked-even-after-applied-
+  * **Reference:** [Stack Exchange Forum Discussion](http://magento.stackexchange.com/questions/67660/magento-hacked-even-after-applied-patch)  
+  
+  
+* **Signature 5:** Altered base Varien Autoloader with code that would be invoked any time a class was autoloaded and before the expected autoloaded logic could be called, the attacker wrote stolen payment and checkout information and obtained gateway credentials to cookies included on all outbound server responses in order to transfer the data for their final removal from the compromised system.
 
- 
-  * **NOTE:** Users across several online forums reported multiple files modified or replaced to gain additonal access to improperly secured applications folders that created entry points into the system and provided mechanisms to steal Customer and Merchant data from the database and Credit Card Data during transit.  During our analysis we discovered the files specified above, though not all of the ones docuemented in the General references lnked below:
+  * **File:** <mage_root>/lib/Varien/Autoloader.php
+
+  * **Reference:** [Stack Exchange Forum Discussion](http://magento.stackexchange.com/questions/67660/magento-hacked-even-after-applied-patch)  
+  
+  
+  * **NOTE:** Users across several online forums reported multiple files modified or replaced to gain additonal access to entry points into the system provided mechanisms to steal Customer and Merchant data from the database and Credit Card Data prior to final transission to Gateway.  During our analysis we discovered the files specified above, though not all of the ones docuemented in the General references lnked below:
 
     * [http://magento.stackexchange.com/questions/67660/magento-hacked-even-after-applied-patch](http://magento.stackexchange.com/questions/67660/magento-hacked-even-after-applied-patch)
-    * [http://invisiblezero.net/magento-secure-your-webshop/](http://invisiblezero.net/magento-secure-your-webshop/)
     * [https://blog.sucuri.net/2015/04/magento-shoplift-supee-5344-exploits-in-the-wild.html](https://blog.sucuri.net/2015/04/magento-shoplift-supee-5344-exploits-in-the-wild.html)
-    * [http://devdocs.magento.com/guides/m1x/install/installer-privileges_after.html#extensions](http://devdocs.magento.com/guides/m1x/install/installer-privileges_after.html#extensions)
-    * [https://blog.sucuri.net/2015/04/magento-shoplift-supee-5344-exploits-in-the-wild.html](https://blog.sucuri.net/2015/04/magento-shoplift-supee-5344-exploits-in-the-wild.html)
+    * [Disabling Magento Connect & restoring file and folder permissions to meet best practices of security recommendations](http://devdocs.magento.com/guides/m1x/install/installer-privileges_after.html#extensions)
+
+
+* **Signature 6:** Attackers enabled a pre-existing copy or installed a new copy of the Magpleasure_Filesystem extension which had 
+
+  * **File:** <mage_root>/lib/Varien/Autoloader.php
+
+  * **Reference:** [Stack Exchange Forum Discussion](http://magento.stackexchange.com/questions/67660/magento-hacked-even-after-applied-patch)  
+
 
 
 * **Discover Magpleasure_Filesystem in app/code/Magpleaseure/Filesystem & app/etc/modules**
