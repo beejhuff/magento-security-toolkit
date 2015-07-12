@@ -2,7 +2,21 @@
 
 [![Join the chat at https://gitter.im/comitdevelopers/magento-security-toolkit](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/comitdevelopers/magento-security-toolkit?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-***IMPORTANT NOTE*** Our current research on known attack signatures related to SUPEE-5344 and SUPEE-5994 is [briefly covered in the Markdown summary](/comitdevelopers/magento-security-toolkit/blob/master/signatures-analysis.md) - please add whatever else you've discovered yourself and submit a pull request, we're ready to merge!  If you'd prefer to submit anything directly or anonymously, you can also use one of the methods below
+ **ALERT - 07-07-2015** *On July 07, 2015 Magento officially released several important Security announcements affecting the Magentio Community.*
+
+ 1. **The Magento Security Center** is now [open to the entire to the Magento Community](http://magento.com/security) - You can now register here for priority email alerts on Magento Security Updates.  We encourage everyone to register now to recieve timely updates on Magento Security Topics as soon as they are made available by Magento.  You can also revdiew Magento's Responsible Disclosure Guidelines, learn how to participate in their Bug Bounty Program and how to use their Cryptigraphic Key to Sign and Encrypt any sensitive communications you need to exchange with Magento.  
+ 
+ 2. **SUPEE-6285** ([Release Notes](http://merch.docs.magento.com/ce/user_guide/Magento_Community_Edition_User_Guide.html#magento/patch-releases-2015.html)) - This patch addresses 2 CRITICAL, 5 MEDIUM, and 2 LOW severity Security Vulnerabilities.  It's included in the Official Magento CE 1.9.2 release, but if you need to ensure that your systems's security issues are addressed in a timely mannger, you may wish to test and install the patch alone.  It ONLY inlcudes updates related to the Security Vulnerabilities disclosed, which the full release includes many other features that may reuire additional testing and validation to ensure compatibility with an existing Magento deployment.
+  
+ 3. **Magento CE 1.9.2** ([Release Notes](http://merch.docs.magento.com/ce/user_guide/Magento_Community_Edition_User_Guide.html#magento/release-notes-ce-1.9.2.html))
+
+ 4. **Updated Magento CE [Downloads Section](http://merch.docs.magento.com/ce/user_guide/Magento_Community_Edition_User_Guide.html#magento/patch-releases-2015.html)** The new Magento CE Downloads section has been reorganzed to make it REALLY easy to find the most recent full Version of Magento CE at the very top of the page while being able to scroll down the page to see all of the patches that are also available.  You can now use a simple drop down to verify which versions of CE each patch is designed for and quickly download them for installation.  (SEE BELOW)
+
+
+There are still some very slight discrepancies in the UI (APPSEC-212 for example lists the CE Versions in the opposite order of all the other lists, SUPEE-2725 appears to leave a gap indicating that CE 1.6.2 isn't affected and a few of the remaining patches use a slightly different Patch naming schema based on their original composition for Magento E
+
+
+Our current research on known attack signatures has been focused on SUPEE-5344 and SUPEE-5994 is [briefly covered in the Markdown summary](/signatures-analysis.md) - please add whatever else you've discovered yourself and submit a pull request, we're ready to merge!  If you'd prefer to submit anything directly or anonymously, you can also use any of the methods below to contact us.
 
 * Email : signatures@comitdevelopers.com
 
