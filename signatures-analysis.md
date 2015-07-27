@@ -79,7 +79,6 @@ manner as described below.  Given the level of automation used in the attacks wi
   * **Reference:** [Stack Exchange Forum Discussion](http://magento.stackexchange.com/questions/67660/magento-hacked-even-after-applied-patch)  
 
 
-
 * **Signature 7:** Discover Magpleasure_Filesystem in app/code/Magpleaseure/Filesystem & app/etc/modules**
 
   * **FILE:** `<mage_root>/app/code/Magpleaseure/Filesystem`
@@ -93,17 +92,18 @@ manner as described below.  Given the level of automation used in the attacks wi
 
 
   * **Signature 8:** A modified Version of the base Varien Object Class** replaces the original application source file.
-  * **FILE:** `httpdocs/lib/Varien/Object.php`
 
-  * When you first have a visitor hit your site AT a specific URI '/checkout|admin/‘ (which the attackers do 5 times in a row) it triggers the hacked Object.php file to be executed vi the conditional statements added to the top of the file...
+    * **FILE:** `httpdocs/lib/Varien/Object.php`
 
-  * This was commonly one of the first evidence of a compromised file on the attacked web server discovered.  It’s primary functions appeared to be twofold:
+    * When you first have a visitor hit your site AT a specific URI '/checkout|admin/‘ (which the attackers do 5 times in a row) it triggers the hacked Object.php file to be executed vi the conditional statements added to the top of the file...
 
-  * First, copy or create additional files stored in the var/media & var/cache subdirectories.  Provided additional opportunities to exploit weak file and folder permissions or unpatched or dated plugins that could be used to provide additional attack vectors if the original entry points were discovered and removed or disabled.
+    * This was commonly one of the first pieces evidence of a compromised file on the attacked web server discovered.  It’s primary functions appeared to be twofold:
 
-  * Second, to query the database for customer contact records and write the results of the queries to another set of files that are stored in the var/media var/cache directories.  These files were serialized and concatenated into Base 64 encoded streams and then written to a COOKIE variable that was passed back in an HTTP response for transmission to another host, presumably one controlled by the attacker.
+      * First, copy or create additional files stored in the var/media & var/cache subdirectories.  Provided additional opportunities to exploit weak file and folder permissions or unpatched or dated plugins that could be used to provide additional attack vectors if the original entry points were discovered and removed or disabled.
 
-* **You find that there has been an Installation of a Modified Version or changes the current file itself, but then deletes the code from itself that performs the modification)**
+      * Second, to query the database for customer contact records and write the results of the queries to another set of files that are stored in the var/media var/cache directories.  These files were serialized and concatenated into Base 64 encoded streams and then written to a COOKIE variable that was passed back in an HTTP response for transmission to another host, presumably one controlled by the attacker.
+
+      * **You find that there has been an Installation of a Modified Version or changes the current file itself, but then deletes the code from itself that performs the modification)**
 
   * **FILE:** lib/Varien/Autoloader.php 
 
