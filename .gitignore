@@ -124,3 +124,5 @@ skin/frontend/default/modern/
 skin/frontend/enterprise
 skin/install/
 var/
+magento-security-toolkit.sublime-project
+magento-security-toolkit.sublime-workspace

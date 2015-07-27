@@ -8,7 +8,7 @@ manner as described below.  Given the level of automation used in the attacks wi
 
 
 * **Signature 1:** Privileged users can’t Login into the Magento Admin Panel
-  * **File:** n/a - no file that performed required SQL updates could be located during analysis.  Attackers appeared to have taken advantage of folder permissions that were not set as per best practices due to a prevoius automated software update that did not compelete properly and left user and group permissions on folders it was updating in an inconsistent state. 
+  * **FILE:** n/a - no file that performed required SQL updates could be located during analysis.  Attackers appeared to have taken advantage of folder permissions that were not set as per best practices due to a prevoius automated software update that did not compelete properly and left user and group permissions on folders it was updating in an inconsistent state. 
   
   * **Reference:** [http://magento.stackexchange.com/questions/64461/error-logging-in-the-admin-panel-fatal-error-class-magpleasure-filesystem-help](http://magento.stackexchange.com/questions/64461/error-logging-in-the-admin-panel-fatal-error-class-magpleasure-filesystem-help)
 
@@ -37,7 +37,7 @@ manner as described below.  Given the level of automation used in the attacks wi
 
 * **Signature 2:** Altered transacation gateway files allows attacker to intercept communications with the gateway merchant transaction process and send CC info to their own servers:** 
 
-  * **File:** <mage_root>/app/code/core/Mage/Payment/Model/Method/Cc.php
+  * **FILE:** <mage_root>/app/code/core/Mage/Payment/Model/Method/Cc.php
   
   * **Reference:** Denis Sinegubko ([@unmaskparasites](https://twitter.com/@unmaskparasites))of [Sucuri Labs Blog]( https://blog.sucuri.net/2015/04/impacts-of-a-hack-on-a-magento-ecommerce-website.html)
 
@@ -46,21 +46,21 @@ manner as described below.  Given the level of automation used in the attacks wi
   
 * **Signature 3:** Altered Magento Application Runtime initializer to obcsure activities and acquire Credit Card Gateway Provider login account and associated key.  All Magento log directives and error output were specifically disabled using directives in this file moved to new locations in thes script before the fucntions that catpured gateway login and key details.
 
-  * **File:** <mage_root>index.php
+  * **FILE:** <mage_root>index.php
 
   * **Reference:** [Stack Exchange Forum Discussion](http://magento.stackexchange.com/questions/67660/magento-hacked-even-after-applied-patch)  
   
     
 * **Signature 4:** Modified or replaced proxy script originally designed to compress, concatenate and minify JavaScript and CSS assets so it would include create an additional server response that included data compromised in an earlier attack.
 
-  * **File:** <mage_root>/js/index.php
+  * **FILE:** <mage_root>/js/index.php
 
   * **Reference:** [Stack Exchange Forum Discussion](http://magento.stackexchange.com/questions/67660/magento-hacked-even-after-applied-patch)  
   
   
 * **Signature 5:** Altered base Varien Autoloader with code that would be invoked any time a class was autoloaded and before the expected autoloaded logic could be called, the attacker wrote stolen payment and checkout information and obtained gateway credentials to cookies included on all outbound server responses in order to transfer the data for their final removal from the compromised system.
 
-  * **File:** <mage_root>/lib/Varien/Autoloader.php
+  * **FILE:** <mage_root>/lib/Varien/Autoloader.php
 
   * **Reference:** [Stack Exchange Forum Discussion](http://magento.stackexchange.com/questions/67660/magento-hacked-even-after-applied-patch)  
   
@@ -74,29 +74,28 @@ manner as described below.  Given the level of automation used in the attacks wi
 
 * **Signature 6:** Attackers enabled a pre-existing copy or installed a new copy of the Magpleasure_Filesystem extension which had 
 
-  * **File:** <mage_root>/lib/Varien/Autoloader.php
+  * **FILE:** <mage_root>/lib/Varien/Autoloader.php
 
   * **Reference:** [Stack Exchange Forum Discussion](http://magento.stackexchange.com/questions/67660/magento-hacked-even-after-applied-patch)  
 
 
 
-* **Discover Magpleasure_Filesystem in app/code/Magpleaseure/Filesystem & app/etc/modules**
-  * **File:** app/code/Magpleaseure/Filesystem & httpdocs/app/etc/modules/Magpleasure_Filesystem.xml
+* **Signature 7:** Discover Magpleasure_Filesystem in app/code/Magpleaseure/Filesystem & app/etc/modules**
+
+  * **FILE:** `<mage_root>/app/code/Magpleaseure/Filesystem`
+  * **FILE:** `<mage_root>/app/etc/modules/Magpleasure_Filesystem.xml`
 
   * **Reference:** [https://www.reddit.com/r/hacking/comments/34025m/magento_exploit_downlaoding_magpleasurefilesystem/](https://www.reddit.com/r/hacking/comments/34025m/magento_exploit_downlaoding_magpleasurefilesystem/)
 
-  * The following command will travers a Linux / Unix file system and print any matching files to the standard output. You may need to modify the beginning directory for your OS & webserver combination.
+  * The following command will travers a Linux / Unix file system and print any matching files to the standard output. You may need to modify the beginning /var/www directory for your OS & webserver combination to point to the site's web root or document root folder.
             
       ```$ find /var/www/ -type d -iname "Magpleasure”```
 
-  * **File:** app/etc/modules/Magplesaure_Fileserver.xml (
-  * Enables the filesystem module from Magpleasure previously demonstrated to be compromised.
 
+  * **Signature 8:** A modified Version of the base Varien Object Class** replaces the original application source file.
+  * **FILE:** `httpdocs/lib/Varien/Object.php`
 
-* **A modified Version of the base Varien Object Class** replaces the original application source file.
-  * **FILE:** httpdocs/lib/Varien/Object.php
-
-  * When you first have a visitor hit your site AT a specific URI '/checkout|admin/‘ (which the attackers do 5 times in a row to trigger this hacked file to be executed vi the conditional statements added to the top of the file, this file.
+  * When you first have a visitor hit your site AT a specific URI '/checkout|admin/‘ (which the attackers do 5 times in a row) it triggers the hacked Object.php file to be executed vi the conditional statements added to the top of the file...
 
   * This was commonly one of the first evidence of a compromised file on the attacked web server discovered.  It’s primary functions appeared to be twofold:
 
@@ -106,7 +105,7 @@ manner as described below.  Given the level of automation used in the attacks wi
 
 * **You find that there has been an Installation of a Modified Version or changes the current file itself, but then deletes the code from itself that performs the modification)**
 
-  * **File:** lib/Varien/Autoloader.php 
+  * **FILE:** lib/Varien/Autoloader.php 
 
   * Throws Error: Mage PHP Notice: Undefined index: REQUEST_URI in /htdocs/lib/Varien/Autoload.php on line 1
 
@@ -179,7 +178,7 @@ manner as described below.  Given the level of automation used in the attacks wi
 
 * **Related to Shoplift Attack:** 
 
-  * **File:** httpdocs/get.php
+  * **FILE:** httpdocs/get.php
 
   * [http://magento.stackexchange.com/questions/67660/magento-hacked-even-after-applied-patch](http://magento.stackexchange.com/questions/67660/magento-hacked-even-after-applied-patch)
   
@@ -188,7 +187,7 @@ manner as described below.  Given the level of automation used in the attacks wi
 
 * **MySQL Driver is altered to allow further attacker access to underlying database**
 
-  * **File:** lib/Varien/Db/Adapter/Pdo/Mysql.php is modified, so patch can not be applied seamlessly
+  * **FILE:** lib/Varien/Db/Adapter/Pdo/Mysql.php is modified, so patch can not be applied seamlessly
 
   * **Reference** [http://magentary.com/kb/magento-recovery-shoplift-vulnerability/](http://magentary.com/kb/magento-recovery-shoplift-vulnerability/)
   
@@ -204,7 +203,7 @@ manner as described below.  Given the level of automation used in the attacks wi
 
 * **Cookie Added allowing attackers to control and hijack user sessions and intercept the data that is associated with those sessions during chekcout**
   
-  * **File:** app/code/core/Mage/Cms/controllers/IndexController.php_ file have a hijacking cookie key installed
+  * **FILE:** app/code/core/Mage/Cms/controllers/IndexController.php_ file have a hijacking cookie key installed
   
   * [Reference](http://magentary.com/kb/magento-recovery-shoplift-vulnerability/)
   
@@ -212,11 +211,11 @@ manner as described below.  Given the level of automation used in the attacks wi
 
 * **MULTIPLE Files: Attackers place content in var/package/ folder that will be used later to attack site via Magpleasure/Filesystem module**   
   
-  * **File:** File_System-1.0.0.xml -  contains references, hashes and payload information for files included in the Magpleasure_Fielsystem module that is compromised and is used to install the files for the compromised plugin in various locations on the system hard drive.
+  * **FILE:** File_System-1.0.0.xml -  contains references, hashes and payload information for files included in the Magpleasure_Fielsystem module that is compromised and is used to install the files for the compromised plugin in various locations on the system hard drive.
 
   * **NOTE:** The following file has suspicious payload and date / timestamps similar to he above file though we have been unable to confirm it as an attack vector with current analsysis.
 
-  * **File:** tmp/package.xml : contains payloads file and directory naes as well as hashes that are coped to specific folders in the file system and expected to perofrn further attacks ataingt the system
+  * **FILE:** tmp/package.xml : contains payloads file and directory naes as well as hashes that are coped to specific folders in the file system and expected to perofrn further attacks ataingt the system
 
   * **NOTE:** Dates of last file changes on all of these files are consistently the same day and the time stamps of the files are all VERY close to each other.  The attackers do not appear to be taking too strong of a precaution of hiding their tracks when it comes to adding files or modifying the date time stamp data to the compromised files.  Be when we diff the files reference in the package.xml they appear identical to the default Magento insulation folders.
 
