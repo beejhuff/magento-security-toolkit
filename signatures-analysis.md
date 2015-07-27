@@ -114,14 +114,16 @@ manner as described below.  Given the level of automation used in the attacks wi
 
     * Reference : [http://stackoverflow.com/questions/29939553/mage-php-notice-undefined-index-request-uri-in-htdocs-lib-varien-autoload-php](http://stackoverflow.com/questions/29939553/mage-php-notice-undefined-index-request-uri-in-htdocs-lib-varien-autoload-php)
  
- 
-* **Modified Version** of primary Magento application index file
 
-  * **FILE:** httpdocs/index.php
+  * **Signature 10:** A modified Version** of primary Magento application index file
 
-  *   This is one of the interesting ones - this file is modified to invoke the Magento API calls to grab the configuration details for your Authorize.net , or other Merchant Provider login credentials as well as a dump of your Merchant Provider Transaction API Key out the system confirmation database tables.  Even if you are safety conscious and store this dat in an encrypted format, because the attackers don’t get the data directly from the database but rather use the Magento API to access it, they can rely on Magento to decrypt this data and pass it along to the calling function.
+    * **FILE:** httpdocs/index.php
 
-  *   The attacker prints these values to the screen to be saved by whatever bots they’re running to process the responses their code is sending via HTML.:  https://rackspeed.de/blog/bruteforce-attacken-und-hacks-von-magento-shops/
+    * **NOTES:**  
+
+      * This is one of the interesting ones - this file is modified to invoke the Magento API calls to grab the configuration details for your Authorize.net, or other Merchant Provider login credentials as well as a dump of your Merchant Provider Transaction API Key and the system confirmation database tables.  Even if you are security conscious and store this dat in an encrypted format, because the attackers don’t get the data directly from the database but rather use the Magento API to access it, they can rely on Magento to decrypt this data and pass it along to the calling function.
+
+      * The attacker prints these values to the screen to be saved by whatever bots they’re running to process the responses their code is sending via HTML.:  https://rackspeed.de/blog/bruteforce-attacken-und-hacks-von-magento-shops/
 
 
 * **Compromise Credit Card Process Internal Components:**
