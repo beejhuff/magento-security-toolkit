@@ -105,11 +105,15 @@ manner as described below.  Given the level of automation used in the attacks wi
 
       * **You find that there has been an Installation of a Modified Version or changes the current file itself, but then deletes the code from itself that performs the modification)**
 
-  * **FILE:** lib/Varien/Autoloader.php 
 
-  * Throws Error: Mage PHP Notice: Undefined index: REQUEST_URI in /htdocs/lib/Varien/Autoload.php on line 1
+  * **Signature 9:** A modified Version of the base Varien Autoloader Class** replaces the original application source file.
 
-  * Reference : [http://stackoverflow.com/questions/29939553/mage-php-notice-undefined-index-request-uri-in-htdocs-lib-varien-autoload-php](http://stackoverflow.com/questions/29939553/mage-php-notice-undefined-index-request-uri-in-htdocs-lib-varien-autoload-php)
+    * **FILE:** lib/Varien/Autoloader.php 
+
+    * Generates the following Error in : `Mage PHP Notice: Undefined index: REQUEST_URI in /htdocs/lib/Varien/Autoload.php on line 1`
+
+    * Reference : [http://stackoverflow.com/questions/29939553/mage-php-notice-undefined-index-request-uri-in-htdocs-lib-varien-autoload-php](http://stackoverflow.com/questions/29939553/mage-php-notice-undefined-index-request-uri-in-htdocs-lib-varien-autoload-php)
+ 
  
 * **Modified Version** of primary Magento application index file
 
