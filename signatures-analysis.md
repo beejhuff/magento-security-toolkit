@@ -126,16 +126,18 @@ manner as described below.  Given the level of automation used in the attacks wi
       * The attacker prints these values to the screen to be saved by whatever bots they’re running to process the responses their code is sending via HTML.:  https://rackspeed.de/blog/bruteforce-attacken-und-hacks-von-magento-shops/
 
 
-* **Compromise Credit Card Process Internal Components:**
 
-  * **FILE:** app/code/core/Mage/Payment/Model/Method/Cc.php
+  * **Signature 11:** Compromise Magento Core Object Model PHP File that handles Credit Card Payment Methods:**
 
-  * This is file is modified to allow an attacker to route credit details over to another server for a man in the middle type attack agains user attempting to check out on the MAgento only earpieces.
+    * **FILE:** app/code/core/Mage/Payment/Model/Method/Cc.php
 
-  * **Reference:**
+    * **NOTE:** This is file is modified to allow an attacker to route credit details over to another server for a man in the middle type attack agains user attempting to check out on the MAgento only earpieces.
+
+    * **References:**
       * https://rackspeed.de/blog/bruteforce-attacken-und-hacks-von-magento-shops/
       * https://rackspeed.de/blog/bruteforce-attacken-und-hacks-von-magento-shops/
     
+
   * **FILE: ** /js/index.php **AND / OR** js/lib/ccard.js
 
   * **Modified source files** here to gain additional access to credit card processing credentials, account settings and information used to steal stored credit card information or access it during transit between wine host and merchant provider.
