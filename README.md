@@ -2,6 +2,8 @@
 
 [![Join the chat at https://gitter.im/comitdevelopers/magento-security-toolkit](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/comitdevelopers/magento-security-toolkit?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
+Website: http://comitdevelopers.github.io/magento-security-toolkit/
+
  **ALERT - 07-07-2015** *On July 07, 2015 Magento officially released several important Security announcements affecting the Magentio Community.*
 
  1. **The Magento Security Center** is now [open to the entire to the Magento Community](http://magento.com/security) - You can now register here for priority email alerts on Magento Security Updates.  We encourage everyone to register now to recieve timely updates on Magento Security Topics as soon as they are made available by Magento.  You can also revdiew Magento's Responsible Disclosure Guidelines, learn how to participate in their Bug Bounty Program and how to use their Cryptigraphic Key to Sign and Encrypt any sensitive communications you need to exchange with Magento.  
