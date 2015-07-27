@@ -126,7 +126,6 @@ manner as described below.  Given the level of automation used in the attacks wi
       * The attacker prints these values to the screen to be saved by whatever bots they’re running to process the responses their code is sending via HTML.:  https://rackspeed.de/blog/bruteforce-attacken-und-hacks-von-magento-shops/
 
 
-
   * **Signature 11:** Compromise Magento Core Object Model PHP File that handles Credit Card Payment Methods:**
 
     * **FILE:** /<mage_root>/app/code/core/Mage/Payment/Model/Method/Cc.php
@@ -143,15 +142,16 @@ manner as described below.  Given the level of automation used in the attacks wi
     * **FILE:** /<mage_root>/js/index.php **AND / OR** 
     * **FILE:** /<mage_root>/js/lib/ccard.js/
 
-    * **Modified source files** here to gain additional access to credit card processing credentials, account settings and information used to steal stored credit card information or access it during transit between wine host and merchant provider.
+    * **NOTES:** 
 
-    *   Replaces CE Edition of /js/index.php oks replaced with a modified version of Magento EE js/index.php that ALSO 
+      * Modified source files** here to gain additional access to credit card processing credentials, account settings and information used to steal stored credit card information or access it during transit between wine host and merchant provider.
 
-  *   Examines the array of POST data elements fore a hash value
+      * Replaces CE Edition of /js/index.php with a modified version of Magento EE js/index.php that ALSO is compromised
 
-  *   If it finds that has an element of the array, it stores two other POST elements in two veraivbles in this PHP script that would normlly be used to output a javascript and css to the invoking browser and instead whites those files whose contents had just been replaced with the post data to disk in older to be executed on the server later in the attack.
+      * Examines the array of POST data elements fore a hash value
 
-  * **NOTE:** We did not personally capture nay evidence of the /<mage_root>/js/lin/cccard.js file being edified but given the number of times others have done so on line we felit prudent to include it intros analysis.
+      * If it finds that has an element of the array, it stores two other POST elements in two veraivbles in this PHP script that would normlly be used to output a javascript and css to the invoking browser and instead whites those files whose contents had just been replaced with the post data to disk in older to be executed on the server later in the attack.
+
 
 * **Magento Admin Panel Error Generated when you attempt to access it to login You are unable to login and get redirected over and over again in a loop to the login form .  The following message is logged to the var/app/log folder:** 
 
