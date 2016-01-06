@@ -2,7 +2,7 @@
 
 [![Join the chat at https://gitter.im/comitdevelopers/magento-security-toolkit](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/comitdevelopers/magento-security-toolkit?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-Website: http://comitdevelopers.github.io/magento-security-toolkit/
+Website: http://beejhuff.github.io/magento-security-toolkit/
 
  **ALERT - On 08-04-2015 & 07-07-2015** *On July 07, 2015 Magento officially released several important Security announcements affecting the Magentio Community. Please take note of the following security-related announcements before using the Magento Security Toolkit*
 
